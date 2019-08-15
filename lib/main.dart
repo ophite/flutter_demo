@@ -1,4 +1,9 @@
+import 'dart:developer';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/fetch_data/project.dart';
+import 'package:http/http.dart' as http;
+import 'package:flutter/scheduler.dart';
+import 'dart:convert';
 
 void main() => runApp(MyApp());
 
@@ -20,10 +25,11 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: MyHomePage(title: 'about2',),
     );
   }
 }
+
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
@@ -42,7 +48,23 @@ class MyHomePage extends StatefulWidget {
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
-
+//class MyHomePage extends StatelessWidget {
+//  @override
+//  Widget build(BuildContext context) {
+//    return Scaffold(
+//      appBar: AppBar(
+//        title: Text('Про нас'),
+//      ),
+//      drawer: DrawerMain(selected: "about"),
+//      body: Center(
+//        child: Text(
+//          'Ми робимо додаток на Flutter.',
+//        ),
+//      ),
+//    );
+//  }
+//}
+//
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
 
@@ -59,6 +81,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    log('>>>>> ');
+    log(widget.title.toString());
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
     //
@@ -69,8 +93,9 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
+        title: Text('About'),
       ),
+      drawer: DrawerMain(selected: "about"),
       body: Center(
         // Center is a layout widget. It takes a single child and positions it
         // in the middle of the parent.
@@ -106,6 +131,139 @@ class _MyHomePageState extends State<MyHomePage> {
         tooltip: 'Increment',
         child: Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
+    );
+  }
+}
+
+class DrawerMain extends StatefulWidget {
+  DrawerMain({Key key, this.selected}) : super(key: key);
+
+  final String selected;
+
+  @override
+  DrawerMainState createState() {
+    return DrawerMainState();
+  }
+}
+
+class DrawerMainState extends State<DrawerMain> {
+  @override
+  Widget build (BuildContext context) {
+    return Drawer(
+        child: ListView(
+            padding: EdgeInsets.zero,
+            children: <Widget>[
+              DrawerHeader(
+                child: Text(
+                  'Flutter demo',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 32.0,
+                  ),
+                ),
+                decoration: BoxDecoration(
+                  color: Colors.blue,
+                ),
+              ),
+              ListTile(
+                selected: widget.selected == 'about',
+                leading: Icon(Icons.info),
+                title: Text('Про нас'),
+                onTap: () {
+                  Navigator.pop(context);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => MyHomePage()),
+                  );
+                },
+              ),
+              ListTile(
+                selected: widget.selected == 'projects',
+                leading: Icon(Icons.list),
+                title: Text('Проекти'),
+                onTap: () {
+                  Navigator.pop(context);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => ProjectsPage()),
+                  );
+                },
+              ),
+            ]
+        )
+    );
+  }
+}
+
+class ProjectsPage extends StatefulWidget {
+  @override
+  _ProjectsPageState createState() => _ProjectsPageState();
+}
+
+class _ProjectsPageState extends State<ProjectsPage> {
+  List<Project> list = List();
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = new GlobalKey<RefreshIndicatorState>();
+
+  Future _fetchData() async {
+    final response = await http.get(
+        "https://raw.githubusercontent.com/jhekasoft/flutter_demo/master/fake_api/project_list.json"
+    );
+    if (response.statusCode == 200) {
+      setState(() {
+        list = (json.decode(response.body) as List)
+            .map((data) => new Project.fromJson(data))
+            .toList();
+      });
+    } else {
+      throw Exception('Failed to load projects');
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    SchedulerBinding.instance.addPostFrameCallback((_){  _refreshIndicatorKey.currentState?.show(); });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Проекти2"),
+      ),
+      drawer: DrawerMain(selected: "projects"),
+      body: RefreshIndicator(
+        key: _refreshIndicatorKey,
+        onRefresh: _fetchData,
+        child: ListView.builder(
+          itemCount: list.length,
+          itemBuilder: (BuildContext context, int index) {
+            return Card(
+              child: Container(
+                padding: EdgeInsets.all(16.0),
+                child: Column(
+                  children: <Widget>[
+                    Image.network(
+                      list[index].imageUrl,
+                      fit: BoxFit.fitHeight,
+                      width: 600.0,
+                      height: 240.0,
+                    ),
+                    Text(
+                      list[index].title,
+                      style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.bold),
+                    ),
+                    Text(
+                      list[index].shortDesc,
+                      style: TextStyle(fontSize: 11.0, fontWeight: FontWeight.normal),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          },
+        ),
+      ),
     );
   }
 }
