@@ -12,12 +12,12 @@ class ProjectsPage extends StatefulWidget {
 
 class _ProjectsPageState extends State<ProjectsPage> {
   List<Project> list = List();
-  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = new GlobalKey<RefreshIndicatorState>();
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
+      new GlobalKey<RefreshIndicatorState>();
 
   Future _fetchData() async {
     final response = await http.get(
-        "https://raw.githubusercontent.com/jhekasoft/flutter_demo/master/fake_api/project_list.json"
-    );
+        "https://raw.githubusercontent.com/jhekasoft/flutter_demo/master/fake_api/project_list.json");
     if (response.statusCode == 200) {
       setState(() {
         list = (json.decode(response.body) as List)
@@ -32,7 +32,9 @@ class _ProjectsPageState extends State<ProjectsPage> {
   @override
   void initState() {
     super.initState();
-    SchedulerBinding.instance.addPostFrameCallback((_){  _refreshIndicatorKey.currentState?.show(); });
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      _refreshIndicatorKey.currentState?.show();
+    });
   }
 
   @override
@@ -61,11 +63,13 @@ class _ProjectsPageState extends State<ProjectsPage> {
                     ),
                     Text(
                       list[index].title,
-                      style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                          fontSize: 14.0, fontWeight: FontWeight.bold),
                     ),
                     Text(
                       list[index].shortDesc,
-                      style: TextStyle(fontSize: 11.0, fontWeight: FontWeight.normal),
+                      style: TextStyle(
+                          fontSize: 11.0, fontWeight: FontWeight.normal),
                     ),
                   ],
                 ),
