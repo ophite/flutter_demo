@@ -1,83 +1,69 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'package:flutter/scheduler.dart';
-import 'fetch_data/project.dart';
-import 'dart:convert';
+import 'package:flutter_app/fetch_data/repository.dart';
+
 import 'drawer.dart';
 
 class UserPage extends StatefulWidget {
+  UserPage(this._repository);
+  final Repository _repository;
+
   @override
   _UserPageState createState() => _UserPageState();
 }
 
 class _UserPageState extends State<UserPage> {
-  List<Project> list = List();
-  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
-      new GlobalKey<RefreshIndicatorState>();
-
-  Future _fetchData() async {
-    final response = await http.get(
-        "https://raw.githubusercontent.com/jhekasoft/flutter_demo/master/fake_api/project_list.json");
-    if (response.statusCode == 200) {
-      setState(() {
-        list = (json.decode(response.body) as List)
-            .map((data) => new Project.fromJson(data))
-            .toList();
-      });
-    } else {
-      throw Exception('Failed to load projects');
-    }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    SchedulerBinding.instance.addPostFrameCallback((_) {
-      _refreshIndicatorKey.currentState?.show();
-    });
-  }
+  bool _loading = false;
+  User _user;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("User"),
+        title: const Text('User'),
       ),
       drawer: DrawerMain(selected: "user"),
-      body: RefreshIndicator(
-        key: _refreshIndicatorKey,
-        onRefresh: _fetchData,
-        child: ListView.builder(
-          itemCount: list.length,
-          itemBuilder: (BuildContext context, int index) {
-            return Card(
-              child: Container(
-                padding: EdgeInsets.all(16.0),
-                child: Column(
-                  children: <Widget>[
-                    Image.network(
-                      list[index].imageUrl,
-                      fit: BoxFit.fitHeight,
-                      width: 600.0,
-                      height: 240.0,
-                    ),
-                    Text(
-                      list[index].title,
-                      style: TextStyle(
-                          fontSize: 14.0, fontWeight: FontWeight.bold),
-                    ),
-                    Text(
-                      list[index].shortDesc,
-                      style: TextStyle(
-                          fontSize: 11.0, fontWeight: FontWeight.normal),
-                    ),
-                  ],
-                ),
-              ),
-            );
-          },
-        ),
+      body: SafeArea(
+        child: _loading ? _buildLoading() : _buildBody(),
       ),
+    );
+  }
+
+  Widget _buildBody() {
+    if (_user != null) {
+      return _buildContent();
+    } else {
+      return _buildInit();
+    }
+  }
+
+  Widget _buildInit() {
+    return Center(
+      child: RaisedButton(
+        child: const Text('Load user data'),
+        onPressed: () {
+          setState(() {
+            _loading = true;
+          });
+          widget._repository.getUser().then((user) {
+            setState(() {
+              _user = user;
+              _loading = false;
+            });
+          });
+        },
+      ),
+    );
+  }
+
+  Widget _buildContent() {
+    return Center(
+      child: Text('Hello ${_user.name} ${_user.surname}'),
+    );
+  }
+
+  Widget _buildLoading() {
+    return const Center(
+      child: CircularProgressIndicator(),
     );
   }
 }

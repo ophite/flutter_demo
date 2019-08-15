@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/fetch_data/repository.dart';
 import 'projects.dart';
 import 'home.dart';
 import 'user.dart';
@@ -62,7 +63,7 @@ class DrawerMainState extends State<DrawerMain> {
         onTap: () {
           Navigator.pop(context);
           Navigator.push(
-              context, MaterialPageRoute(builder: (context) => UserPage()));
+              context, MaterialPageRoute(builder: (context) => UserPage(new Repository())));
         },
       ),
     ]));
