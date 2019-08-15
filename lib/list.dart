@@ -41,7 +41,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Проекти"),
+        title: Text("Проекти2"),
       ),
       drawer: DrawerMain(selected: "projects"),
       body: RefreshIndicator(

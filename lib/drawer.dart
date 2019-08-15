@@ -47,7 +47,7 @@ class DrawerMainState extends State<DrawerMain> {
               ListTile(
                 selected: widget.selected == 'projects',
                 leading: Icon(Icons.list),
-                title: Text('Проекти'),
+                title: Text('Проекти1'),
                 onTap: () {
                   Navigator.pop(context);
                   Navigator.push(
