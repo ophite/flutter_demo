@@ -35,7 +35,7 @@ class DrawerMainState extends State<DrawerMain> {
       ListTile(
         selected: widget.selected == 'about',
         leading: Icon(Icons.info),
-        title: Text('Про нас'),
+        title: Text('About menu'),
         onTap: () {
           Navigator.pop(context);
           Navigator.push(
@@ -47,7 +47,7 @@ class DrawerMainState extends State<DrawerMain> {
       ListTile(
         selected: widget.selected == 'projects',
         leading: Icon(Icons.list),
-        title: Text('Проекти'),
+        title: Text('Projects menu'),
         onTap: () {
           Navigator.pop(context);
           Navigator.push(
@@ -59,7 +59,7 @@ class DrawerMainState extends State<DrawerMain> {
       ListTile(
         selected: widget.selected == 'user',
         leading: Icon(Icons.verified_user),
-        title: Text('User2'),
+        title: Text('User menu'),
         onTap: () {
           Navigator.pop(context);
           Navigator.push(
