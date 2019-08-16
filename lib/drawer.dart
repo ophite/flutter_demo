@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/fetch_data/repository.dart';
+import 'package:flutter_app/fetch_data/user.dart';
+import 'package:flutter_app/user.scoped.dart';
 import 'projects.dart';
 import 'home.dart';
 import 'user.dart';
@@ -63,9 +64,24 @@ class DrawerMainState extends State<DrawerMain> {
         onTap: () {
           Navigator.pop(context);
           Navigator.push(
-              context, MaterialPageRoute(builder: (context) => UserPage(new Repository())));
+            context,
+            MaterialPageRoute(builder: (context) => UserPage(new Repository())),
+          );
         },
       ),
+      ListTile(
+        selected: widget.selected == 'userScoped',
+        leading: Icon(Icons.supervised_user_circle),
+        title: Text('user scoped menu'),
+        onTap: () {
+          Navigator.pop(context);
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => UserScopedPage(new Repository())),
+          );
+        },
+      )
     ]));
   }
 }
