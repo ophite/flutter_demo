@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/fetch_data/user.dart';
+import 'package:flutter_app/pages/lake.dart';
 import 'package:flutter_app/pages/user.scoped.dart';
 import '../pages/projects.dart';
 import '../pages/home.dart';
@@ -81,7 +82,17 @@ class DrawerMainState extends State<DrawerMain> {
                 builder: (context) => UserScopedPage(new Repository())),
           );
         },
-      )
+      ),
+      ListTile(
+        selected: widget.selected == 'lake',
+        leading: Icon(Icons.open_with),
+        title: Text('Lake menu'),
+        onTap: () {
+          Navigator.pop(context);
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => LakePage()));
+        },
+      ),
     ]));
   }
 }
