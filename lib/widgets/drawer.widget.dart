@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/pages/user/services/user.repository.dart';
+import 'package:flutter_app/pages/home/home.page.dart';
+import 'package:flutter_app/pages/user/user.page.dart';
 import 'package:flutter_app/pages/lake/lake.page.dart';
 import 'package:flutter_app/pages/user/userScoped.page.dart';
-import '../pages/project/projects.page.dart';
-import '../pages/home/home.page.dart';
-import '../pages/user/user.page.dart';
+import 'package:flutter_app/pages/project/projects.page.dart';
+import 'package:flutter_app/pages/user/services/user.repository.dart';
 
 class DrawerMain extends StatefulWidget {
   DrawerMain({Key key, this.selected}) : super(key: key);
