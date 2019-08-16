@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/scheduler.dart';
-import 'fetch_data/project.dart';
+import '../fetch_data/project.dart';
 import 'dart:convert';
-import 'drawer.dart';
+import '../widgets/drawer.dart';
 
 class ProjectsPage extends StatefulWidget {
   @override

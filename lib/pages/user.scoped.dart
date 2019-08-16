@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/fetch_data/user.dart';
 import 'package:flutter_app/fetch_data/user.scoped.dart';
 import 'package:scoped_model/scoped_model.dart';
-import 'drawer.dart';
+import '../widgets/drawer.dart';
 
 class UserScopedPage extends StatefulWidget {
   UserScopedPage(this._repository);

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/fetch_data/user.dart';
-import 'package:flutter_app/user.scoped.dart';
-import 'projects.dart';
-import 'home.dart';
-import 'user.dart';
+import 'package:flutter_app/pages/user.scoped.dart';
+import '../pages/projects.dart';
+import '../pages/home.dart';
+import '../pages/user.dart';
 
 class DrawerMain extends StatefulWidget {
   DrawerMain({Key key, this.selected}) : super(key: key);
