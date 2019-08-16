@@ -3,7 +3,7 @@ import 'package:flutter_app/pages/user/services/user.repository.dart';
 import 'package:flutter_app/pages/lake/lake.page.dart';
 import 'package:flutter_app/pages/user/userScoped.page.dart';
 import '../pages/project/projects.page.dart';
-import '../pages/home.page.dart';
+import '../pages/home/home.page.dart';
 import '../pages/user/user.page.dart';
 
 class DrawerMain extends StatefulWidget {
