@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/fetch_data/user.dart';
-
-import '../widgets/drawer.dart';
+import './services/user.model.dart';
+import './services/user.repository.dart';
+import '../../widgets/drawer.widget.dart';
 
 class UserPage extends StatefulWidget {
   UserPage(this._repository);
-  final Repository _repository;
+  final UserRepository _repository;
 
   @override
   _UserPageState createState() => _UserPageState();

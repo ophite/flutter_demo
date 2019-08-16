@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/fetch_data/user.dart';
-import 'package:flutter_app/fetch_data/user.scoped.dart';
 import 'package:scoped_model/scoped_model.dart';
-import '../widgets/drawer.dart';
+import '../../widgets/drawer.widget.dart';
+import './services/user.repository.dart';
+import './services/userScoped.model.dart';
 
 class UserScopedPage extends StatefulWidget {
   UserScopedPage(this._repository);
-  final Repository _repository;
+  final UserRepository _repository;
 
   @override
   _UserPageScopedState createState() => _UserPageScopedState();

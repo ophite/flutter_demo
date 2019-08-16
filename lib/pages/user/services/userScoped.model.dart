@@ -1,10 +1,11 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_app/fetch_data/user.dart';
 import 'package:scoped_model/scoped_model.dart';
+import './user.model.dart';
+import './user.repository.dart';
 
 class UserScoped extends Model {
   UserScoped(this._repository);
-  final Repository _repository;
+  final UserRepository _repository;
 
   bool _loading = false;
   User _user;

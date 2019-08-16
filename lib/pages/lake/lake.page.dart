@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/fetch_data/user.dart';
-
-import '../widgets/drawer.dart';
+import 'package:flutter_app/pages/user/services/user.model.dart';
+import '../../widgets/drawer.widget.dart';
 
 class LakePage extends StatefulWidget {
   @override

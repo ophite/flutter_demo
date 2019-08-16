@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/fetch_data/user.dart';
-import 'package:flutter_app/pages/lake.dart';
-import 'package:flutter_app/pages/user.scoped.dart';
-import '../pages/projects.dart';
-import '../pages/home.dart';
-import '../pages/user.dart';
+import 'package:flutter_app/pages/user/services/user.repository.dart';
+import 'package:flutter_app/pages/lake/lake.page.dart';
+import 'package:flutter_app/pages/user/userScoped.page.dart';
+import '../pages/project/projects.page.dart';
+import '../pages/home.page.dart';
+import '../pages/user/user.page.dart';
 
 class DrawerMain extends StatefulWidget {
   DrawerMain({Key key, this.selected}) : super(key: key);
@@ -66,7 +66,8 @@ class DrawerMainState extends State<DrawerMain> {
           Navigator.pop(context);
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => UserPage(new Repository())),
+            MaterialPageRoute(
+                builder: (context) => UserPage(new UserRepository())),
           );
         },
       ),
@@ -79,7 +80,7 @@ class DrawerMainState extends State<DrawerMain> {
           Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => UserScopedPage(new Repository())),
+                builder: (context) => UserScopedPage(new UserRepository())),
           );
         },
       ),
