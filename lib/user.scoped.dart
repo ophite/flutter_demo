@@ -23,12 +23,10 @@ class _UserPageScopedState extends State<UserScopedPage> {
 
   @override
   Widget build(BuildContext context) {
-    return ScopedModel(
+    return ScopedModel<UserScoped>(
         model: _userScoped,
         child: Scaffold(
-          appBar: AppBar(
-            title: const Text('Scoped User'),
-          ),
+          appBar: AppBar(title: const Text('Scoped User')),
           drawer: DrawerMain(selected: "userScoped"),
           body: SafeArea(
             child: ScopedModelDescendant<UserScoped>(

@@ -72,7 +72,7 @@ class DrawerMainState extends State<DrawerMain> {
       ListTile(
         selected: widget.selected == 'userScoped',
         leading: Icon(Icons.supervised_user_circle),
-        title: Text('user scoped menu'),
+        title: Text('User scoped menu'),
         onTap: () {
           Navigator.pop(context);
           Navigator.push(
